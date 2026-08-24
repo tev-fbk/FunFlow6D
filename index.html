@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> FunFlow6D: Foundational feature fusion for conditional
+flow matching in 6D pose estimation </title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/alembic.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="./static/js/particles-bg.js"></script>
+</head>
+<body>
+
+<canvas id="bg-particles"></canvas>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"> FunFlow6D: Foundational feature fusion for conditional
+flow matching in 6D pose estimation </h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=GYZWQrAAAAAJ&hl=en&authuser=1">Amir Hamza</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a href="https://davideboscaini.github.io/">Davide Boscaini</a><sup>1</sup>,
+            </span>
+
+            <span class="author-block">
+              <a href="https://fabiopoiesi.github.io/">Fabio Poiesi</a><sup>1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>TeV - Fondazione Bruno Kessler,</span>
+            <span class="author-block"><sup>2</sup>University of Trento,</span>
+          </div>
+
+
+          <div class="is-size-6 Email-authors">
+          <span class="author-block">{ahamza, dboscaini, poiesi}@fbk.eu</span><br>
+          </div>
+
+          <!-- ## add vertical space between the title and the "Accepted at" section -->
+          <div style="height: 1.0rem;"></div>
+
+
+          <!-- <div class="has-text-centered" style="font-size: 1.1rem; font-weight: bold; color: #ce3c37;">
+            <p>Rank 1st on BOP Leaderboard - Model-based 6D Localization of Seen Objects </p>
+          </div> -->
+          <div class="has-text-centered" style="font-size: 1.1rem; font-weight: bold; color: #ce3c37; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+            <span>Accepted at</span>
+            <img src="./static/images/bmvc2026.png" alt="BMVC 2026" style="height: 1.75em; width: auto; vertical-align: middle;"
+                 onerror="this.style.display='none'; this.previousElementSibling.textContent='Accepted at BMVC 2026';">
+          </div>
+
+          <div style="height: 1.0rem;"></div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2602.19719"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video(coming soon)</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/tev-fbk/FunFlow6D"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code(coming soon)</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- <section class="hero teaser">
+  <div class="container is-max-desktop has-text-centered">
+    <div class="hero-body">
+      <img src="./static/IROS25_dGeDi-teaser.png"
+           alt="Descriptive Alt Text"
+           style="display:inline-block; background-color: rgb(255, 255, 255); width:80%; height:10%;margin-bottom: 2rem">
+      <h2 class="subtitle has-text-centered">
+        <span class="is-size-5">We introduce <strong>dGedi</strong>, a 3D point cloud encoder trained by <strong>distilling</strong> GeDi features.</span>
+        <span class="is-size-5">GeDi suffers from slow inference as it processes points sequentially, first extracting local reference frames (LRF) and then computing descriptors with PointNet++ (PN++).</span>
+        <span class="is-size-5">Instead, dGedi retains GeDi's generalization and distinctiveness while being over <strong>170 times faster</strong>, making it ideal for <strong>real-time</strong> robotics applications.</span>
+      </h2>
+    </div>
+  </div>
+</section> -->
+
+
+<!-- <section class="hero is-light is-small" style="background-color: transparent;">
+  <div class="hero-body" style="background-color: transparent;">
+    <div class="container has-text-centered">
+      <video id="dgedi"
+             autoplay
+             controls
+             muted
+             loop
+             playsinline
+             style="display: inline-block; margin: 0 auto; background-color: transparent;"
+             width="50%">
+        <source src="./static/videos/iros_2025_03.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section> -->
+
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Conditional flow matching has enabled a step forward in object 6D pose estimation,
+            achieving state-of-the-art performance by progressively denoising and registering object
+            representations to observed scenes. Existing methods require training task-specific encoders 
+            supervised on object-scene overlap and rely on trivial feature fusion strategies to
+            resolve pose ambiguities. We present FunFlow6D, a novel flow matching-based formula-
+            tion that leverages features from geometric and appearance foundation models for pose
+            estimation, eliminating the need for task-specific encoder training. We also introduce a
+            cross attention-based fusion mechanism that dynamically combines geometric and appear-
+            ance features to provide richer conditioning for the flow matching module. Experiments
+            on four datasets from the BOP benchmark show that FunFlow6D outperforms the previous
+            state of the art while reducing supervision requirements and memory overhead. Extensive
+            ablations validate the contribution of each proposed component.
+          </p>
+          <!-- New styled note -->
+          <!-- <p class="has-text-centered" style="font-weight: bold; margin-top: 2rem; font-size: 1.1em;">
+            More details coming soon. -->
+
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        
+        <h2 class="title is-3">Method</h2>
+
+        <div class="content has-text-justified">
+
+          <!-- Figure -->
+          <div class="has-text-centered" style="margin-bottom: 1.5rem;">
+            <img src="./static/images/main_diagram.png"
+                 alt="FunFlow6D Method Overview"
+                 style="max-width: 100%; height: auto; border-radius: 8px;">
+            
+            <!-- Caption -->
+            <p style="margin-top: 0.8rem; font-size: 0.95em; color: #555; text-align: justify;">
+              <b>Overview of FunFlow6D.</b>
+              Given the canonical query point cloud $\mathcal{Q}$ and an RGBD image $\textbf{I}$ as input (top left), FunFlow6D recovers the 6D object pose $(\textbf{R}, \textbf{t})$ (bottom right) through three stages: feature extraction, generative denoising, and pose estimation.
+              Throughout, $\mathcal{Q}$ acts as a <i>static anchor</i> and the flow operates only on the target $\mathcal{T}$, lifted from the masked depth of $\textbf{I}$.
+              <br><br>
+
+              <b>Feature extraction:</b> A frozen geometric encoder $\Phi$ (dGeDi) and a frozen semantic encoder $\Theta$ (DINOv2, reduced via UMAP) produce per-point descriptors that are fused
+              by a bidirectional gated cross-attention module (right inset) into $\textbf{F}^\mathcal{Q}, \textbf{F}^\mathcal{T}$.
+              Colors encode feature similarity: corresponding regions across $\mathcal{Q}$ and $\mathcal{T}$ share similar colors.
+              <br><br>
+
+              <b>Generative denoising:</b> A conditional flow-matching network $\Psi_\Omega$ (DiT), conditioned on $\textbf{F}^\mathcal{Q},
+              \textbf{F}^\mathcal{T}$, learns a velocity field that canonicalizes $\mathcal{T}$ into $\hat{\mathcal{T}}$ while the anchor velocities are zeroed.
+              <br><br>
+
+              <b>Pose estimation:</b> The flow-induced correspondences between $\mathcal{T}$ and $\hat{\mathcal{T}}$ yield the camera-to-canonical
+              transform via a RANSAC-based orthogonal Procrustes solver followed by ICP, and the pose $(\textbf{R}, \textbf{t})$.
+              <br><br>
+
+              Snowflakes denote frozen modules and flames trainable ones.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+
+        <h2 class="title is-3">Quantitative Results</h2>
+
+        <!-- Caption -->
+        <div class="content has-text-justified"
+             style="margin-bottom: 1rem; font-size: 0.95rem; color: #555;">
+          <p>
+            6D pose accuracy on the BOP benchmark, evaluated in terms of AR.
+          </p>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+          <table class="table is-striped is-hoverable is-fullwidth is-size-7">
+
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Method</th>
+                <th>Models</th>
+                <th>Params</th>
+                <th>LM-O</th>
+                <th>TUD-L</th>
+                <th>IC-BIN</th>
+                <th>YCB-V</th>
+                <th>Avg</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>1</td>
+                <td>HccePose(BF)</td>
+                <td>32</td>
+                <td>41.5M</td>
+                <td>80.5</td><td>94.4</td><td>72.4</td><td>91.1</td><td>84.6</td>
+              </tr>
+
+              <tr>
+                <td>2</td>
+                <td>GDRNPP (BOP23)</td>
+                <td>3</td>
+                <td>106.8M</td>
+                <td>79.4</td><td>96.4</td><td>73.7</td><td>92.8</td><td>85.6</td>
+              </tr>
+
+              <tr>
+                <td>3</td>
+                <td>Flose</td>
+                <td>3</td>
+                <td>89.2M</td>
+                <td>86.1</td><td>98.8</td><td>74.8</td><td>92.9</td><td>88.2</td>
+              </tr>
+
+              <tr style="background-color: #e6f7ff; font-weight: bold;">
+                <td>4</td>
+                <td>FunFlow6D (ours)</td>
+                <td>3</td>
+                <td>43.1M</td>
+                <td><b>87.1</b></td>
+                <td><b>98.9</b></td>
+                <td><b>75.3</b></td>
+                <td><b>93.6</b></td>
+                <td><b>88.7</b></td>
+              </tr>
+
+              <tr style="background-color: #e6f7ff;">
+                <td>5</td>
+                <td>Improvement wrt row 3</td>
+                <td>-</td>
+                <td>-</td>
+                <td style="color: green;">+1.0</td>
+                <td style="color: green;">+0.1</td>
+                <td style="color: green;">+0.5</td>
+                <td style="color: green;">+0.7</td>
+                <td style="color: green;">+0.5</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+
+        <h2 class="title is-3">Ablation Study</h2>
+
+        <!-- Inliers Figure -->
+        <div class="has-text-centered" style="margin-bottom: 1.5rem;">
+          <img src="./static/images/inliers.png"
+               alt="Average number of inliers for different encoder and dimensionality reduction choices"
+               style="max-width: 100%; height: auto; border-radius: 8px;">
+
+          <p style="margin-top: 0.8rem; font-size: 0.95em; color: #555; text-align: justify;">
+            Average number of inliers for various appearance encoders (left), geometric encoders (center), and dimensionality reduction techniques (right).
+            An object-scene correspondence is considered an inlier if the correspondence error is smaller than 3% of the object diameter.
+          </p>
+        </div>
+
+        <!-- Ablation Table -->
+        <div class="content has-text-justified"
+             style="margin-bottom: 1rem; margin-top: 2.5rem; font-size: 0.95rem; color: #555;">
+          <p>
+            Ablation study on LM-O. Key: <i class="fas fa-fire" style="color:#e0663d;"></i> = trained,
+            <i class="fas fa-snowflake" style="color:#4a90d9;"></i> = frozen, - = not used.
+            The default configuration of FunFlow6D is <span style="background-color:#e6f7ff; padding:0 4px;">highlighted</span>.
+          </p>
+        </div>
+
+        <div class="table-container">
+          <table class="table is-striped is-hoverable is-fullwidth is-size-7">
+
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Geom. Enc.</th>
+                <th>App. Enc.</th>
+                <th>Dim. Red.</th>
+                <th>Feat. fusion</th>
+                <th>Pose estim.</th>
+                <th>Pose refin.</th>
+                <th>AR</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>1</td>
+                <td><i class="fas fa-fire" style="color:#e0663d;"></i> overlap-aware</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>SVD</td>
+                <td>ICP</td>
+                <td>83.5</td>
+              </tr>
+
+              <tr>
+                <td>2</td>
+                <td><i class="fas fa-fire" style="color:#e0663d;"></i> overlap-aware</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> DINOv2</td>
+                <td>PCA</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> Point-level sum</td>
+                <td>RANSAC</td>
+                <td>ICP</td>
+                <td>86.1</td>
+              </tr>
+
+              <tr>
+                <td>3</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> dGeDi</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> DINOv2</td>
+                <td>PCA</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> Point-level sum</td>
+                <td>RANSAC</td>
+                <td>ICP</td>
+                <td>81.8</td>
+              </tr>
+
+              <tr>
+                <td>4</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> dGeDi</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> DINOv2</td>
+                <td>UMAP</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> Point-level sum</td>
+                <td>RANSAC</td>
+                <td>ICP</td>
+                <td>83.6</td>
+              </tr>
+
+              <tr>
+                <td>5</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> dGeDi</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> DINOv2</td>
+                <td>UMAP</td>
+                <td><i class="fas fa-fire" style="color:#e0663d;"></i> Gated attention</td>
+                <td>RANSAC</td>
+                <td>-</td>
+                <td>85.8</td>
+              </tr>
+
+              <tr style="background-color: #e6f7ff; font-weight: bold;">
+                <td>6</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> dGeDi</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> DINOv2</td>
+                <td>UMAP</td>
+                <td><i class="fas fa-fire" style="color:#e0663d;"></i> Gated attention</td>
+                <td>RANSAC</td>
+                <td>ICP</td>
+                <td><b>87.1</b></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Timing Pie Chart -->
+        <div class="has-text-centered" style="margin-top: 3rem;">
+          <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:2.5rem;">
+
+            <div style="width:220px; height:220px; border-radius:50%; flex-shrink:0;
+                        background: conic-gradient(
+                          #4a90d9 0% 37.52%,
+                          #e0663d 37.52% 52.41%,
+                          #58a65c 52.41% 67.02%,
+                          #c0559c 67.02% 76.00%,
+                          #e8b13a 76.00% 84.33%,
+                          #7d6bbd 84.33% 92.20%,
+                          #4fb3a9 92.20% 99.59%,
+                          #b0b0b0 99.59% 100%);
+                        box-shadow: 0px 4px 12px rgba(0,0,0,0.1);">
+            </div>
+
+            <div style="text-align:left; font-size:0.9em; color:#555;">
+              <div><span style="display:inline-block;width:10px;height:10px;background:#4a90d9;margin-right:6px;"></span>Euler integration (37.5%)</div>
+              <div><span style="display:inline-block;width:10px;height:10px;background:#e0663d;margin-right:6px;"></span>DINOv2 (14.9%)</div>
+              <div><span style="display:inline-block;width:10px;height:10px;background:#58a65c;margin-right:6px;"></span>RANSAC (14.6%)</div>
+              <div><span style="display:inline-block;width:10px;height:10px;background:#c0559c;margin-right:6px;"></span>DiT flow model (9.0%)</div>
+              <div><span style="display:inline-block;width:10px;height:10px;background:#e8b13a;margin-right:6px;"></span>ICP (8.3%)</div>
+              <div><span style="display:inline-block;width:10px;height:10px;background:#7d6bbd;margin-right:6px;"></span>dGeDi (7.9%)</div>
+              <div><span style="display:inline-block;width:10px;height:10px;background:#4fb3a9;margin-right:6px;"></span>UMAP (7.4%)</div>
+              <div><span style="display:inline-block;width:10px;height:10px;background:#b0b0b0;margin-right:6px;"></span>Lifting + downsampling (0.4%)</div>
+            </div>
+
+          </div>
+
+          <p style="margin-top: 1.2rem; font-size: 0.95em; color: #555; text-align: justify;">
+            Per-image inference time breakdown on LM-O. The 50-step Euler integration dominates the pipeline, as is inherent to iterative generative sampling.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-justified">
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3 has-text-centered">Method</h2>
+          <figure>
+            <img src=".static/images/diagram_crop_final.png" alt="Method Overview" style="max-width: 90%; height: 80;">
+          </figure>
+          <p>
+            We introduce a novel distillation procedure to transfer the distinctive properties of a slow teacher encoder to a faster student encoder.
+            We define our proposed distillation approach as <strong>object-oriented</strong> because training supervision is provided at the object level.
+          </p>
+          <p>
+            First, we extract teacher descriptors $\mathcal{F}^Q=\Phi_\Theta(\mathcal{P}^Q), \mathcal{F}^T=\Phi_\Theta(\mathcal{P}^T)$ using GeDi encoder $\Phi_\Theta$.
+            Then, we learn student descriptors $\mathcal{G}^Q=\Psi_\Omega(\mathcal{P}^Q), \mathcal{G}^T=\Psi_\Omega(\mathcal{P}^T)$ with a PTV3 encoder $\Psi_\Omega$.
+            During distillation, we optimize the parameters $\Omega$ so that $\mathcal{G}^Q \approx \mathcal{F}^Q$ and $\mathcal{G}^T \approx \mathcal{F}^T$, while $\Theta$ remain frozen.
+            Note that this differs from online knowledge distillation approaches, where both the teacher and student are neural networks and learn $\Theta, \Omega$ simultaneously.
+          </p>
+          <p>
+            In our case, the architectures of $\Phi_\Theta$ and $\Psi_\Omega$ are distinct. Teacher features are precomputed, stored in memory, and loaded as needed during distillation.
+            To optimize this process, we propose storing teacher features only for query objects and introduce a module that leverages ground-truth 6D poses to transfer them to target objects.
+            Moreover, we propose a custom loss function that focuses learning on noise-free points, leading to improved performance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- 
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-justified">
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3 has-text-centered">Method</h2>
+
+          <figure class="has-text-centered">
+            <img src="./static/images/diagram_crop_final.png" alt="Method Overview" style="max-width: 90%; height: auto;">
+          </figure>
+
+          Problem Formulation
+          <p>
+            <strong>Problem formulation.</strong>
+            Given the 3D model of a <em>query object</em> and an RGBD image $\mathbf{I}$ of a scene containing it,
+            our goal is to recover the 6D pose of the object with respect to the camera reference frame.
+            We define the <em>target object</em> as the partial observation of the query object visible in $\mathbf{I}$.
+          </p>
+
+          <p>
+            Let $\mathcal{Q} \in \mathbb{R}^{N \times 3}$ denote the point cloud of the query object, and let
+            $\mathcal{T} \in \mathbb{R}^{N \times 3}$ be the point cloud obtained by lifting the pixels corresponding
+            to the target object into 3D space using the camera intrinsic parameters.
+            For notational simplicity, we assume that both point clouds contain the same number of points $N$.
+          </p>
+
+          <p>
+            Our objective is to estimate the rigid transformation
+            $(\hat{\mathbf{R}} \in \mathrm{SO}(3), \hat{\mathbf{t}} \in \mathbb{R}^3)$
+            that aligns $\mathcal{Q}$ with $\mathcal{T}$, such that
+          </p>
+
+          <p class="has-text-centered">
+            $\mathcal{Q}^r = \hat{\mathbf{R}}\,\mathcal{Q} + \hat{\mathbf{t}} \approx \mathcal{T}$.
+          </p>
+
+          <p>
+            For the alignment process, we additionally define $\mathcal{T}^r$ as the target point cloud transformed
+            into the query object's canonical frame using the ground-truth pose.
+          </p>
+
+           Overview -->
+          <!-- <p>
+            <strong>Overview.</strong>
+            As illustrated in Figure above, we design a three-stage pipeline.
+            First, we extract point-wise features $\mathbf{F}^{\mathcal{Q}}$ and $\mathbf{F}^{\mathcal{T}}$
+            from $\mathcal{Q}$ and $\mathcal{T}$, respectively, by fusing overlap-aware geometric features
+            and appearance-aware semantic features.
+            These features are produced by separate encoders $\Phi_\Theta$ and $\Gamma$.
+          </p>
+
+          <p>
+            Next, we deform the target point cloud $\mathcal{T}$ into
+            $\hat{\mathcal{T}} \approx \mathcal{T}^r$ using a conditional flow matching model
+            $\Psi_\Omega$, which performs a denoising process conditioned on the extracted features.
+          </p>
+
+          <p>
+            Finally, we estimate the rigid transformation $(\mathbf{R}, \mathbf{t})$
+            that best aligns $\mathcal{T}$ with $\hat{\mathcal{T}}$
+            by solving a Procrustes alignment problem.
+          </p> -->
+
+        <!-- </div>
+      </div>
+    </div>
+  </div>
+</section> --> 
+
+
+
+
+
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/dYhhG27ohpg?si=Pdojq_xvj22Ul-Un&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    / Paper video. -->
+  <!-- </div> -->
+<!-- </section> --> 
+
+
+<section class="section" id="Citation">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Citation</h2>
+    <source> If you find this work useful, please cite:
+    <pre><code>@article{funflow6d2026hamza,
+  author    = {Hamza, Amir et al.},
+  title     = {Foundational feature fusion for conditional flow matching in 6D pose estimation},
+  journal   = {BMVC},
+  year      = {2026},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/pdf/paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/tev-fbk/FunFlow6D" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+            The webpage template is from <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
