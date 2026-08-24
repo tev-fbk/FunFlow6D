@@ -1,12 +1,12 @@
-# Flose: Generative 6D Pose Estimation via Conditinal Flow Matching
-This is the repository that contains source code for the Flose website. The website template is from [Nerfies](https://nerfies.github.io).
+# FunFlow6D: Foundational feature fusion for conditional flow matching in 6D pose estimation
+This is the repository that contains source code for the FunFlow6D website. The website template is from [Nerfies](https://nerfies.github.io).
 
-If you find Flose useful for your work please cite:
+If you find FunFlow6D useful for your work please cite:
 ```
-@article{flose2026amir
+@article{funflow6d2026hamza
   author    = {Hamza, Amir et al.},
-  title     = {Generative 6D Pose Estimation via Conditinal Flow Matching},
-  journal   = {arXiv},
+  title     = {Foundational feature fusion for conditional flow matching in 6D pose estimation},
+  journal   = {BMVC},
   year      = {2026},
 }
 ```
