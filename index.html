@@ -297,7 +297,7 @@ flow matching in 6D pose estimation </h1>
               <tr>
                 <td>1</td>
                 <td>HccePose(BF)</td>
-                <td>32</td>
+                <td>34</td>
                 <td>41.5M</td>
                 <td>80.5</td><td>94.4</td><td>72.4</td><td>91.1</td><td>84.6</td>
               </tr>
@@ -305,7 +305,7 @@ flow matching in 6D pose estimation </h1>
               <tr>
                 <td>2</td>
                 <td>GDRNPP (BOP23)</td>
-                <td>3</td>
+                <td>4</td>
                 <td>106.8M</td>
                 <td>79.4</td><td>96.4</td><td>73.7</td><td>92.8</td><td>85.6</td>
               </tr>
@@ -313,7 +313,7 @@ flow matching in 6D pose estimation </h1>
               <tr>
                 <td>3</td>
                 <td>Flose</td>
-                <td>3</td>
+                <td>4</td>
                 <td>89.2M</td>
                 <td>86.1</td><td>98.8</td><td>74.8</td><td>92.9</td><td>88.2</td>
               </tr>
@@ -321,7 +321,7 @@ flow matching in 6D pose estimation </h1>
               <tr style="background-color: #e6f7ff; font-weight: bold;">
                 <td>4</td>
                 <td>FunFlow6D (ours)</td>
-                <td>3</td>
+                <td>4</td>
                 <td>43.1M</td>
                 <td><b>87.1</b></td>
                 <td><b>98.9</b></td>
@@ -450,6 +450,28 @@ flow matching in 6D pose estimation </h1>
                 <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> dGeDi</td>
                 <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> DINOv2</td>
                 <td>UMAP</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> No attention</td>
+                <td>RANSAC</td>
+                <td>ICP</td>
+                <td>85.7</td>
+              </tr>
+
+              <tr>
+                <td>6</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> dGeDi</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> DINOv2</td>
+                <td>UMAP</td>
+                <td><i class="fas fa-fire" style="color:#e0663d;"></i> Cross attention</td>
+                <td>RANSAC</td>
+                <td>ICP</td>
+                <td>86.3</td>
+              </tr>
+
+              <tr>
+                <td>7</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> dGeDi</td>
+                <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> DINOv2</td>
+                <td>UMAP</td>
                 <td><i class="fas fa-fire" style="color:#e0663d;"></i> Gated attention</td>
                 <td>RANSAC</td>
                 <td>-</td>
@@ -457,7 +479,7 @@ flow matching in 6D pose estimation </h1>
               </tr>
 
               <tr style="background-color: #e6f7ff; font-weight: bold;">
-                <td>6</td>
+                <td>8</td>
                 <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> dGeDi</td>
                 <td><i class="fas fa-snowflake" style="color:#4a90d9;"></i> DINOv2</td>
                 <td>UMAP</td>
