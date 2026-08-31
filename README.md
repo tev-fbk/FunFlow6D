@@ -3,10 +3,10 @@ This is the repository that contains source code for the FunFlow6D website. The 
 
 If you find FunFlow6D useful for your work please cite:
 ```
-@article{funflow6d2026hamza
-  author    = {Hamza, Amir et al.},
+@inproceedings{funflow6d2026hamza
+  author    = {Hamza, Amir and Boscaini, Davide and Poiesi, Fabio},
   title     = {Foundational feature fusion for conditional flow matching in 6D pose estimation},
-  journal   = {BMVC},
+  booktitle = {BMVC},
   year      = {2026},
 }
 ```
