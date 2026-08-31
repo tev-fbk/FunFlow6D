@@ -87,14 +87,40 @@ flow matching in 6D pose estimation </h1>
           <!-- ## add vertical space between the title and the "Accepted at" section -->
           <div style="height: 1.0rem;"></div>
 
+          <style>
+            .bmvc-badge {
+              position: relative;
+              overflow: hidden;
+              isolation: isolate;
+            }
+            .bmvc-badge::before {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: -60%;
+              width: 45%;
+              height: 100%;
+              background: linear-gradient(115deg, transparent, rgba(255,255,255,0.35), transparent);
+              transform: skewX(-20deg);
+              animation: bmvc-shine 9s ease-in-out infinite;
+              pointer-events: none;
+            }
+            @keyframes bmvc-shine {
+              0%   { left: -60%; }
+              45%  { left: 130%; }
+              100% { left: 130%; }
+            }
+          </style>
 
-          <!-- <div class="has-text-centered" style="font-size: 1.1rem; font-weight: bold; color: #ce3c37;">
-            <p>Rank 1st on BOP Leaderboard - Model-based 6D Localization of Seen Objects </p>
-          </div> -->
-          <div class="has-text-centered" style="font-size: 1.1rem; font-weight: bold; color: #ce3c37; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
-            <span>Accepted at</span>
-            <img src="./static/images/bmvc2026.png" alt="BMVC 2026" style="height: 1.75em; width: auto; vertical-align: middle;"
-                 onerror="this.style.display='none'; this.previousElementSibling.textContent='Accepted at BMVC 2026';">
+          <div style="display:flex; justify-content:center;">
+            <a href="https://bmvc2026.bmva.org/" target="_blank" rel="noopener" class="bmvc-badge"
+               style="font-size: 1.1rem; font-weight: 600; color: #1f6f5c; text-decoration: none; display:flex; align-items:center; justify-content:center; gap:0.6rem; background: linear-gradient(135deg, #e6f7f2, #eaf5ff); border: 1px solid #cdebe1; border-radius: 999px; padding: 0.5rem 1.3rem; box-shadow: 0 2px 10px rgba(31, 111, 92, 0.15); transition: box-shadow 0.2s ease, transform 0.2s ease;"
+               onmouseover="this.style.boxShadow='0 4px 14px rgba(31, 111, 92, 0.25)'; this.style.transform='translateY(-1px)';"
+               onmouseout="this.style.boxShadow='0 2px 10px rgba(31, 111, 92, 0.15)'; this.style.transform='translateY(0)';">
+              <span>Accepted at</span>
+              <img src="./static/images/bmvc2026.png" alt="BMVC 2026" style="height: 2.75em; width: auto; vertical-align: middle;"
+                   onerror="this.style.display='none'; this.previousElementSibling.textContent='Accepted at BMVC 2026';">
+            </a>
           </div>
 
           <div style="height: 1.0rem;"></div>
@@ -660,8 +686,9 @@ flow matching in 6D pose estimation </h1>
     <h2 class="title">Citation</h2>
     <source> If you find this work useful, please cite:
     <pre><code>@inproceedings{hamza2026funflow6d,
-  author    = {Hamza, Amir and Boscaini, Davide and Poiesi, Fabio},
+  author    = {Hamza, Amir, Boscaini, Davide and Poiesi, Fabio},
   title     = {Foundational feature fusion for conditional flow matching in 6D pose estimation},
+  booktitle = {BMVC},
   booktitle = {BMVC},
   year      = {2026},
 }</code></pre>
